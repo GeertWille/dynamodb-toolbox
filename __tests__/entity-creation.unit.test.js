@@ -356,6 +356,7 @@ describe('Entity creation', ()=> {
     const TestEntity = new Entity({
       name: 'TestEnt',
       typeAlias: 'type',
+      typeHidden: true,
       attributes: {
         pk: { partitionKey: true }
       },
@@ -364,6 +365,7 @@ describe('Entity creation', ()=> {
 
     expect(TestEntity._etAlias).toBe('type')
     expect(TestEntity.schema.attributes._et.alias).toBe('type')
+    expect(TestEntity.schema.attributes._et.hidden).toBe(true)
   })
 
 
