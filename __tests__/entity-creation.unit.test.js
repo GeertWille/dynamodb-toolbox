@@ -60,7 +60,6 @@ describe('Entity creation', ()=> {
     expect(TestEntity._etAlias).toBe('entity')
   })
 
-
   it('creates entity that overrides timestamp names', () => {
     let TestEntity = new Entity({
       name: 'TestEntity',
@@ -344,6 +343,28 @@ describe('Entity creation', ()=> {
     expect(TestEntity.defaults).toHaveProperty('_md')
     expect(TestEntity._etAlias).toBe('entity')
   }) // creates entity w/ table
+
+  it('creates entity w/ table w/ overriden type alias', async () => {
+  
+    // Create basic table
+    const TestTable = new Table({
+      name: 'test-table',
+      partitionKey: 'pk'
+    })
+
+    // Create basic entity
+    const TestEntity = new Entity({
+      name: 'TestEnt',
+      typeAlias: 'type',
+      attributes: {
+        pk: { partitionKey: true }
+      },
+      table: TestTable
+    })
+
+    expect(TestEntity._etAlias).toBe('type')
+    expect(TestEntity.schema.attributes._et.alias).toBe('type')
+  })
 
 
   it('creates entity composite key delimiter, prefix and suffix', async () => {
